@@ -30,9 +30,11 @@ public class PizzaService
 
   public Pizza Create(Pizza newPizza)
   {
-    _context.Pizzas.Add(newPizza);
-    _context.SaveChanges();
-
+        if (newPizza is not null)
+        {
+            _context.Pizzas.Add(newPizza);
+            _context.SaveChanges();
+        }
     return newPizza;
   }
 
