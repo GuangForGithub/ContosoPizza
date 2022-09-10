@@ -33,13 +33,15 @@ public class PizzaService
 			.SingleOrDefault(p => p.Id == id);
 	}
 
-	public Pizza Create(Pizza newPizza)
-	{
-		_context.Pizzas.Add(newPizza);
-		_context.SaveChanges();
-
-		return newPizza;
-	}
+  public Pizza Create(Pizza newPizza)
+  {
+        if (newPizza is not null)
+        {
+            _context.Pizzas.Add(newPizza);
+            _context.SaveChanges();
+        }
+    return newPizza;
+  }
 
 	public void UpdateSauce(int PizzaId, int SauceId)
 	{
@@ -77,55 +79,13 @@ public class PizzaService
 		_context.SaveChanges();
 	}
 
-	public void DeleteById(int id)
-	{
-		var pizzaToDelete = _context.Pizzas.Find(id);
-		if (pizzaToDelete is not null)
-		{
-			_context.Pizzas.Remove(pizzaToDelete);
-			_context.SaveChanges();
-		}
-	}
-
-
-	////////////////////////////////////////////////////////////////
-	// static List<Pizza> Pizzas { get; }
-	// static int nextId = 3;
-	// static PizzaService()
-	// {
-
-	//   Pizzas = new List<Pizza>
-	//       {
-	//           new Pizza { Id = 1, Name = "Classic Italian", },
-	//           new Pizza { Id = 2, Name = "Veggie", }
-	//       };
-	// }
-
-	// public static List<Pizza> GetAll() => Pizzas;
-
-	// public static Pizza? Get(int id) => Pizzas.FirstOrDefault(p => p.Id == id);
-
-	// public static void Add(Pizza pizza)
-	// {
-	//   pizza.Id = nextId++;
-	//   Pizzas.Add(pizza);
-	// }
-
-	// public static void Delete(int id)
-	// {
-	//   var pizza = Get(id);
-	//   if (pizza is null)
-	//     return;
-
-	//   Pizzas.Remove(pizza);
-	// }
-
-	// public static void Update(Pizza pizza)
-	// {
-	//   var index = Pizzas.FindIndex(p => p.Id == pizza.Id);
-	//   if (index == -1)
-	//     return;
-
-	//   Pizzas[index] = pizza;
-	// }
+  public void DeleteById(int id)
+  {
+    var pizzaToDelete = _context.Pizzas.Find(id);
+    if (pizzaToDelete is not null)
+    {
+      _context.Pizzas.Remove(pizzaToDelete);
+      _context.SaveChanges();
+    }
+  }
 }

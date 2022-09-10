@@ -8,11 +8,11 @@ namespace ContosoPizza.Controllers;
 [Route("[controller]")]
 public class PizzaController : ControllerBase
 {
-  //private readonly PizzaService _service;
-  //public PizzaController(PizzaService service)
-  //{
-  //  _service = service;
-  //}
+   private readonly PizzaService _service;
+  public PizzaController(PizzaService service)
+  {
+    _service = service;
+  }
 
   // GET all action
   [HttpGet]

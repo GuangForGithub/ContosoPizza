@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ContosoPizza.Data;
+using ContosoPizza.Services;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,14 +14,26 @@ builder.Services.AddDbContext<PizzaContext>(opt => opt.UseMySql(
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "PizzaStore API", Description = "Making the Pizzas you love", Version = "v1" });
+});
+
+//添加服务
+builder.Services.AddScoped<PizzaService>();
 
 var app = builder.Build();
+
+app.UseSwagger();
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "PizzaStore API V1");
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-  app.UseSwagger();
+  app.UseSwagger(); 
   app.UseSwaggerUI();
 }
 
